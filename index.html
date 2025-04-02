@@ -3,46 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arcabidi - Unity Asset Store Publisher</title>
+    <title>Arcabidi - Unity Asset Publisher Portfolio</title> {/* Updated Title */}
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet"> {/* Using Inter font */}
 </head>
 <body>
-    <div class="container">
-        <header>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">Arcabidi</a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="#portfolio" class="nav-link">Portfolio</a></li>
+                <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <header class="hero" id="home">
             <h1>Arcabidi</h1>
-            <p class="subtitle">Unity Asset Store Publisher</p>
-        </header>
-
-        <hr>
-
-        <section class="about">
-            <p>Creator of quality assets and templates for the Unity Engine.</p>
-            <p>Find my work on the Unity Asset Store or explore my projects on GitHub.</p>
-        </section>
-
-        <section class="links">
-            <a href="https://assetstore.unity.com/publishers/108555?preview=1" target="_blank" class="button">View Assets on Unity Store</a>
-            <a href="https://github.com/Arcabidi" target="_blank" class="button github">Visit GitHub Profile</a>
-        </section>
-
-        <hr>
-
-        <section class="contact">
-            <h2>Contact Information</h2>
-            <p>For support, questions, or business inquiries regarding my Unity Assets, please contact me via email:</p>
-            <p class="email-container">
-                <a id="email-link" href="#">Enable JavaScript to see email</a>
-            </p>
-        </section>
-
-        <footer>
-            <p>&copy; <span id="year"></span> Arcabidi. All rights reserved.</p>
-        </footer>
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
+            <p class="subtitle">Unity Asset Store Publisher & Developer</p>
