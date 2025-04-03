@@ -1,3 +1,5 @@
+/* style.css */
+
 /* Basic Reset & Font */
 * {
     margin: 0;
@@ -6,30 +8,34 @@
 }
 
 html {
-    scroll-behavior: smooth; /* Enable smooth scrolling */
+    scroll-behavior: smooth;
+    height: 100%;
 }
 
 body {
-    font-family: 'Inter', sans-serif; /* Modern sans-serif font */
-    background-color: #f8f9fa; /* Lighter grey background */
-    color: #343a40; /* Darker text color */
-    line-height: 1.7;
-    font-weight: 400; /* Regular weight */
+    font-family: 'Inter', sans-serif;
+    background-color: #f8f9fa; /* Light grey page background */
+    color: #343a40;
+    line-height: 1.6;
+    font-weight: 400;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 /* --- Navbar --- */
 .navbar {
-    background-color: #ffffff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    background-color: #000000;
     padding: 1rem 0;
-    position: sticky; /* Make navbar sticky */
+    position: sticky;
     top: 0;
     z-index: 1000;
     width: 100%;
+    flex-shrink: 0;
 }
 
 .nav-container {
-    max-width: 1100px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 0 20px;
     display: flex;
@@ -37,272 +43,397 @@ body {
     align-items: center;
 }
 
-.nav-logo {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #343a40;
-    text-decoration: none;
+.nav-logo { font-size: 1.5rem; font-weight: 700; color: #ffffff; text-decoration: none;
+    display: flex; /* Make the link a flex container */
+    align-items: center; /* Vertically align items inside (icon + text) */
+    gap: 0.2rem; /* Space between logo icon and text */}
+
+.logo-icon {
+    height: 40px; /* Adjust height as needed */
+    width: auto; /* Maintain aspect ratio */
+    display: block; /* Remove extra space below image */
+}
+.nav-menu { list-style: none; display: flex; gap: 25px; align-items: center; }
+.nav-link { color: #e0e0e0; text-decoration: none; font-weight: 500; transition: color 0.3s ease; display: inline-flex; align-items: center;}
+.nav-link:hover { color: #ffffff; }
+
+/* --- GitHub Icon Specific Styling --- */
+.nav-link .fa-github {
+    font-size: 1.6rem;
+    line-height: 1;
 }
 
-.nav-menu {
-    list-style: none;
+/* --- Portfolio Carousel Section --- */
+.portfolio-carousel {
     display: flex;
-    gap: 25px; /* Space between nav items */
+    width: 100%;
+    overflow: hidden;
+    background-color: #000000; /* Set background to black */
+    flex-grow: 1;
 }
 
-.nav-item {
-    /* Style for list items if needed */
+/* --- Swiper Styles --- */
+.swiper {
+    width: 100%;
+    height: 100%;
 }
 
-.nav-link {
-    color: #495057;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
+.swiper-wrapper {
+    align-items: center; /* Align slides vertically */
 }
 
-.nav-link:hover {
-    color: #007bff; /* Highlight color on hover */
+.swiper-slide {
+    position: relative; /* Keep for potential future overlays if needed */
+    background-color: #000000; /* Slide background matches section */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Ensure slide takes full height */
+    overflow: hidden;
+    width: 100%; /* Default mobile */
+    max-width: none; /* Override any max-width */
+    opacity: 1; /* Default opacity for mobile */
+    transform: none; /* Default transform for mobile */
+    transition: transform 0.4s ease, opacity 0.4s ease, filter 0.4s ease;
 }
 
-/* --- Main Content Container --- */
-.main-container {
-    max-width: 1100px;
-    margin: 40px auto; /* Add space below navbar */
-    padding: 0 20px;
+.swiper-slide img {
+    display: block;
+    aspect-ratio: 3 / 2; /* Maintain aspect ratio */
+    object-fit: contain; /* Scale image down to fit, keeping aspect ratio */
+    width: auto; /* Let height determine width */
+    max-width: 100%; /* Prevent image from exceeding slide width */
+    height: auto; /* Let width determine height */
+    max-height: 100%; /* Prevent image from exceeding slide height */
 }
 
-/* --- Hero Section --- */
-.hero {
-    text-align: center;
-    padding: 60px 20px;
-    background-color: #ffffff; /* White background */
-    border-radius: 8px;
-    margin-bottom: 40px; /* Space below hero */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-}
-
-.hero h1 {
-    font-size: 2.8rem;
-    color: #212529;
-    margin-bottom: 10px;
-    font-weight: 700;
-}
-
-.hero .subtitle {
-    font-size: 1.2rem;
-    color: #6c757d;
-    margin-bottom: 30px;
-    font-weight: 300;
-}
-
-/* --- General Content Sections --- */
-.content-section {
-    background-color: #ffffff;
-    padding: 40px;
-    border-radius: 8px;
-    margin-bottom: 40px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-}
-
-.content-section h2 {
-    text-align: center;
-    font-size: 2rem;
-    color: #343a40;
-    margin-bottom: 15px;
-    font-weight: 700;
-}
-
-.content-section hr {
-    border: 0;
-    height: 2px; /* Thicker accent line */
-    background-color: #007bff; /* Accent color */
-    width: 60px; /* Shorter width */
-    margin: 0 auto 30px auto; /* Center the line */
-}
-
-.about {
-    text-align: center; /* Center about text */
-}
-
-.about p {
-    max-width: 700px; /* Limit line width for readability */
-    margin: 0 auto 20px auto;
-    color: #495057;
-}
-
-
-/* --- Buttons --- */
+/* --- Base Button Styles (shared by overlay and footer) --- */
 .button {
     display: inline-block;
-    padding: 12px 28px;
-    background-color: #007bff; /* Primary blue button */
-    color: #ffffff;
     text-decoration: none;
     border-radius: 5px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
     font-weight: 500;
     text-align: center;
     cursor: pointer;
-    border: none; /* Remove default border */
+    /* ADDED transform back to transition */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    color: #ffffff !important; /* Ensure text is white */
+    padding: 14px 30px; /* Larger padding for prominence */
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
-.button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-    transform: translateY(-2px); /* Slight lift effect */
-    color: #ffffff; /* Ensure text remains white */
-}
-
-.button.hero-button {
-    font-size: 1.1rem;
-    padding: 15px 35px;
-}
-
-.button.github {
-    background-color: #6c757d; /* Grey for secondary actions */
-    margin-top: 15px;
-}
-
-.button.github:hover {
-    background-color: #5a6268;
-}
-
+/* Specific styles for Store Button look */
 .button.store-button {
-    background-color: #28a745; /* Green for store links */
-    margin-top: auto; /* Push button to bottom of card content */
-    width: 100%; /* Make button full width of card padding */
+    background-color: rgba(243, 76, 76, 0.8); /* Reddish background */
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px); /* For Safari */
 }
 
+/* --- ADDED HOVER RULE BACK --- */
 .button.store-button:hover {
-    background-color: #218838;
+    background-color: rgba(243, 76, 76, 1.0); /* Fully opaque */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5); /* More prominent shadow */
+    /* Apply scale while respecting existing vertical transform if needed elsewhere */
+    /* Since footer button handles vertical centering itself, we can just use scale here */
+    /* If button used elsewhere needed Y translate, use: transform: translateY(-50%) scale(1.05); */
+     /* transform: scale(1.05); Let's re-evaluate this with the footer button's transform */
 }
 
-.button.disabled {
-    background-color: #adb5bd;
+/* Style for DISABLED store button (if needed later) */
+.button.store-button.disabled {
+    background-color: rgba(100, 100, 100, 0.6);
+    border-color: rgba(255, 255, 255, 0.2);
     cursor: not-allowed;
-    pointer-events: none; /* Prevent clicks */
+    pointer-events: none; /* Prevents clicks */
+    text-shadow: none;
+    transform: none; /* No hover effect */
+    box-shadow: none;
 }
 
-/* --- Portfolio Gallery --- */
-.gallery-grid {
-    display: flex;
-    flex-wrap: wrap; /* Allow items to wrap to next line */
-    gap: 30px; /* Space between cards */
-    justify-content: center; /* Center items if space allows */
+/* --- Footer Asset Button Specific Positioning --- */
+.footer-asset-button {
+    position: absolute; /* Position relative to footer-container */
+    top: 50%; /* Start at vertical center */
+    /* Base transform for vertical centering */
+    transform: translateY(-50%);
+    /* 'left' will be set by JavaScript */
+    left: 53.28125%; /* Default fallback position before JS runs */
+    z-index: 5; /* Ensure it's above other static footer content if overlap occurs */
+    padding: 10px 20px; /* Footer specific padding */
+    /* Add transform back to transition specifically for this button if base doesn't have it */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease, left 0.3s ease-out;
 }
 
-.gallery-item.card {
-    background-color: #f8f9fa; /* Slightly off-white card background */
-    border-radius: 8px;
-    overflow: hidden; /* Ensure image corners are rounded */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    flex: 1 1 300px; /* Flex properties: grow, shrink, basis (min width) */
-    max-width: 350px; /* Optional: max width */
-    display: flex;
-    flex-direction: column; /* Stack image, content, button vertically */
+/* --- UPDATED FOOTER BUTTON HOVER --- */
+/* Target footer button specifically to combine transforms */
+.footer-asset-button:hover {
+     /* Keep hover styles from .button.store-button:hover */
+     background-color: rgba(243, 76, 76, 1.0);
+     box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+     /* Combine vertical centering with scale */
+     transform: translateY(-50%) scale(1.05);
 }
-
-.gallery-item.card:hover {
-    transform: translateY(-5px); /* Lift card on hover */
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-}
-
-.gallery-item img {
-    display: block;
-    width: 100%;
-    height: 200px; /* Fixed height for images */
-    object-fit: cover; /* Cover the area, cropping if needed */
-}
-
-.card-content {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1; /* Allow content area to grow */
-}
-
-.card-content h3 {
-    font-size: 1.3rem;
-    color: #343a40;
-    margin-bottom: 10px;
-    font-weight: 700;
-}
-
-.card-content p {
-    color: #495057;
-    font-size: 0.95rem;
-    flex-grow: 1; /* Allow paragraph to push button down */
-    margin-bottom: 20px;
+/* Ensure disabled footer button doesn't scale */
+.footer-asset-button.disabled:hover {
+    transform: translateY(-50%); /* Just the centering */
 }
 
 
-/* --- Contact Section --- */
-.contact {
-    text-align: center;
+/* --- Swiper Navigation/Pagination Styles --- */
+:root {
+    --swiper-navigation-color: #ffffff;
+    --swiper-pagination-color: #ffffff;
+    --swiper-navigation-size: 30px; /* Control arrow size */
 }
 
-.contact p {
-     color: #495057;
+.swiper-button-next,
+.swiper-button-prev {
+    display: none; /* Hide by default (mobile-first) */
+    color: var(--swiper-navigation-color) !important;
+    background-color: rgba(0, 0, 0, 0.3);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    padding: 15px 5px; /* Add padding around the arrow icon */
+    border-radius: 50%; /* Make it circular */
+    width: calc(var(--swiper-navigation-size) + 10px); /* Adjust width based on size + padding */
+    height: calc(var(--swiper-navigation-size) + 10px); /* Adjust height based on size + padding */
+    transform: scale(0.9); /* Slightly smaller appearance */
+    transition: background-color 0.3s ease;
+}
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+.swiper-button-prev { left: 30px; } /* Position from edge */
+.swiper-button-next { right: 30px; } /* Position from edge */
+
+.swiper-pagination-bullet {
+    background-color: rgba(255, 255, 255, 0.5); /* Dim inactive bullets */
+    opacity: 1;
+}
+.swiper-pagination-bullet-active {
+    background-color: var(--swiper-pagination-color); /* Bright active bullet */
+}
+.swiper-pagination {
+    bottom: 15px !important; /* Position pagination */
 }
 
-.email-container {
-    margin-top: 15px;
-    padding: 15px;
-    background-color: #e9ecef; /* Light background for email */
-    border-radius: 5px;
-    display: inline-block; /* Fit content width */
-}
 
-#email-link {
-    color: #007bff; /* Blue email link */
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 1.1rem;
-    word-break: break-all;
+/* --- Styles to Hide Nav/Pagination if Swiper disables them --- */
+.swiper-button-disabled {
+    display: none !important; /* Crucial for hiding arrows when watchOverflow disables them */
 }
-
-#email-link:hover {
-    text-decoration: underline;
+.swiper-pagination-hidden {
+    display: none !important; /* Hide pagination if disabled */
 }
 
 
 /* --- Footer --- */
 footer {
-    text-align: center;
-    margin: 50px 0 30px 0;
-    font-size: 0.9em;
-    color: #6c757d; /* Footer text color */
+    background-color: #000000;
+    color: #f8f9fa;
+    padding: 1.5rem 0;
+    flex-shrink: 0; /* Prevent footer from shrinking */
+    z-index: 1; /* Keep above potential absolute elements */
+    position: relative; /* Needed for absolute positioning of the button */
 }
+
+.footer-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Helps vertically center flex items */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    gap: 15px; /* Space between left/right sections when wrapped */
+    position: relative; /* Anchor for the absolute positioned button */
+    min-height: 60px; /* Ensure footer has some height for centering, adjust as needed */
+}
+
+.footer-left {
+    text-align: left;
+    flex-basis: auto; /* Allow content to size */
+    flex-grow: 1; /* Allow left side to grow */
+    margin-right: auto; /* Push right content away */
+    z-index: 2; /* Keep above button if overlapping */
+    position: relative; /* Ensure stacking context */
+}
+
+.footer-right {
+    text-align: right;
+    flex-basis: auto; /* Allow content to size */
+    margin-left: 20px; /* Add some space from the button area */
+    z-index: 2; /* Keep above button if overlapping */
+    position: relative; /* Ensure stacking context */
+}
+
+
+.footer-left h2 {
+    font-size: 1.75rem; /* Existing style */
+    color: #ffffff;
+    margin-bottom: 0px; /* Reduced margin */
+    font-weight: 700;
+}
+
+#email-link {
+    color: #ffffff;
+    text-decoration: underline;
+    font-weight: normal;
+    font-size: 0.9rem;
+    word-break: break-all; /* Prevent long emails overflowing */
+    transition: color 0.3s ease;
+}
+#email-link:hover {
+    color: #ced4da;
+    text-decoration: underline;
+}
+
+.footer-right p {
+    font-size: 0.85em;
+    color: #adb5bd;
+    margin-bottom: 2px; /* Reduced margin */
+}
+
 
 /* --- Responsive Adjustments --- */
-@media (max-width: 768px) {
-    .nav-menu {
-        display: none; /* Hide menu on small screens - needs JS for hamburger */
-        /* Basic mobile nav would require JS, skipping for simplicity */
+
+/* Desktop - Strict Height & Centered Preview Mode */
+@media (min-width: 769px) {
+    body {
+        height: 100vh; /* Fix body height */
+        overflow: hidden; /* Prevent body scroll */
     }
-    .hero h1 {
-        font-size: 2.2rem;
+    .portfolio-carousel {
+        /* !!! IMPORTANT: ADJUST THESE PIXEL VALUES based on your actual Navbar/Footer height !!! */
+        height: calc(100vh - 64px - 95px - 1px); /* Example: 64px Navbar, 95px Footer */
     }
-    .hero .subtitle {
-        font-size: 1rem;
+    /* Show arrows ONLY IF they are NOT disabled by Swiper */
+    .swiper-button-next:not(.swiper-button-disabled),
+    .swiper-button-prev:not(.swiper-button-disabled) {
+        display: flex; /* Use flex to center icon inside */
+        align-items: center;
+        justify-content: center;
     }
-     .content-section {
-        padding: 30px 20px;
+
+    /* --- STYLES for non-active slides --- */
+    .swiper-slide {
+        opacity: 0.7;
+        transform: scale(0.85);
+        filter: brightness(0.45); /* Slightly darker */
+        width: auto;
+        max-width: none;
+        background-color: #000000;
     }
-     .content-section h2 {
-        font-size: 1.8rem;
+
+    /* --- STYLES for the active slide --- */
+    .swiper-slide-active {
+        opacity: 1;
+        transform: scale(1);
+        filter: brightness(1);
     }
 }
 
-@media (max-width: 480px) {
-     .main-container {
-        margin-top: 20px;
+
+/* Mobile - Revert & Allow Scroll */
+@media (max-width: 768px) {
+    body {
+        height: auto; /* Allow body height to grow */
+        overflow: auto; /* Allow body scroll */
+        min-height: 100vh; /* Ensure footer reaches bottom */
     }
-     .hero {
-         padding: 40px 15px;
+    .portfolio-carousel {
+        height: auto; /* Let carousel content dictate height */
+        min-height: 60vh; /* Give it a minimum height */
+        flex-grow: 0; /* Don't force it to fill space */
+        background-color: #000000;/* Black bg on mobile too */
+    }
+    .swiper-wrapper {
+        align-items: stretch; /* Allow different height slides if needed */
+    }
+    /* Reset desktop effects for mobile */
+    .swiper-slide {
+        width: 100% !important; /* Force full width */
+        opacity: 1 !important; /* Ensure full opacity */
+        transform: none !important; /* Reset transform */
+        filter: none !important; /* Reset filter */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #000000; /* Black bg */
+    }
+    .swiper-slide img {
+        max-height: 80%; /* Limit image height within slide */
+        max-width: 95%; /* Limit image width within slide */
+        border-radius: 0;
+        box-shadow: none;
+    }
+    .nav-menu { display: none; } /* Hide desktop nav menu items */
+
+    /* Explicitly hide arrows on mobile, overriding desktop styles */
+    .swiper-button-next,
+    .swiper-button-prev {
+        display: none !important;
+    }
+
+    .footer-container {
+        flex-direction: column; /* Stack elements vertically */
+        align-items: center; /* Center-align items */
+        text-align: center;
+        gap: 15px; /* Adjust gap for vertical stacking */
+        position: static; /* Override relative positioning */
+        min-height: auto; /* Reset min-height */
+    }
+    .footer-left, .footer-right {
+        text-align: center;
+        flex-basis: auto; /* Reset basis */
+        width: 100%; /* Take full width */
+        margin: 0; /* Reset margins */
+        z-index: auto; /* Reset z-index */
+        position: static; /* Reset position */
+    }
+     .footer-left h2 {
+        font-size: 1.5rem; /* Adjust h2 size for mobile if needed */
+    }
+
+    /* --- Footer Button on Mobile --- */
+    .footer-asset-button {
+        position: static; /* Make it part of the normal flow */
+        transform: none; /* Reset transforms */
+        margin-top: 10px; /* Add some space above it */
+        margin-bottom: 10px; /* Add some space below it */
+        padding: 12px 25px; /* Adjust padding */
+        order: 1; /* Place it after footer-left but before footer-right in column */
+        width: auto; /* Allow button to size naturally */
+        max-width: 80%; /* Prevent it getting too wide */
+        left: auto !important; /* Ensure JS 'left' style is overridden */
+        /* No specific hover transform needed here */
+    }
+    /* Mobile hover effect - simpler */
+    .footer-asset-button:hover {
+        background-color: rgba(243, 76, 76, 1.0);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+        /* No scale needed on mobile hover */
+        transform: none;
+    }
+     /* Ensure right content comes after button on mobile */
+     .footer-right {
+        order: 2;
      }
-    .hero h1 {
-        font-size: 1.8rem;
-    }
+
+    .footer { padding: 1rem 15px; }
+}
+
+/* Fallback scroll allowance for very tall/narrow screens or short screens */
+@media (max-aspect-ratio: 9/16), (max-height: 550px) {
+     body {
+        height: auto;
+        overflow: auto;
+        min-height: 100vh;
+     }
+     .portfolio-carousel {
+        height: auto;
+        min-height: 50vh;
+     }
 }

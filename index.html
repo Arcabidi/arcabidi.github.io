@@ -3,25 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arcabidi - Unity Asset Publisher Portfolio</title> {/* Updated Title */}
+    <title>Arcabidi</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet"> {/* Using Inter font */}
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar">
         <div class="nav-container">
-            <a href="#" class="nav-logo">Arcabidi</a>
+            <a href="#" class="nav-logo">
+                <img src="Arcabidi Faded.png" alt="Arcabidi Logo" class="logo-icon">
+                Arcabidi
+            </a>
             <ul class="nav-menu">
-                <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
-                <li class="nav-item"><a href="#portfolio" class="nav-link">Portfolio</a></li>
-                <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
+                <li class="nav-item">
+                    <a href="https://github.com/Arcabidi" class="nav-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>
 
-    <div class="main-container">
-        <header class="hero" id="home">
-            <h1>Arcabidi</h1>
-            <p class="subtitle">Unity Asset Store Publisher & Developer</p>
+    <section class="portfolio-carousel" id="portfolio">
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"
+                     data-product-name="2.5D Beat 'Em Up Template"
+                     data-asset-link="YOUR_TEMPLATE_ASSET_STORE_LINK_1">
+                    <img src="2p5dbeatemuptemplate.png" alt="2.5D Beat 'Em Up Template">
+                </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="footer-container">
+             <div class="footer-left">
+                  <h2 id="product-title">2.5D Beat 'Em Up Template</h2>
+             </div>
+
+             <a id="asset-store-button" href="#" class="button store-button footer-asset-button" target="_blank">View on Asset Store</a>
+
+             <div class="footer-right">
+                 <p>
+                      <a id="email-link" href="#">Enable JavaScript to see email</a>
+                 </p>
+                  <p>&copy; <span id="year"></span> Arcabidi. All rights reserved.</p>
+             </div>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
