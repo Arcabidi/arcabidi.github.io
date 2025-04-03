@@ -1,12 +1,14 @@
+/* script.js */
+
 document.addEventListener('DOMContentLoaded', function() {
 
     console.log('DOM Content Loaded - Script Start');
 
     // --- Configuration ---
-    const IMAGE_ASPECT_RATIO = 3 / 2; // Use the aspect ratio of your actual images (e.g., 2400/1600 = 1.5)
-    const CONTAINER_MAX_WIDTH_PX = 1430; // Adjust max content width if needed
+    const IMAGE_ASPECT_RATIO = 3 / 2;
+    const CONTAINER_MAX_WIDTH_PX = 1430;
     const MOBILE_BREAKPOINT = 768;
-    const SWIPER_DESKTOP_SPACE_BETWEEN = 1; // Keeping 1px for testing loop issues
+    const SWIPER_DESKTOP_SPACE_BETWEEN = 1;
 
     // --- Get references to elements ---
     const productTitleElement = document.getElementById('product-title');
@@ -17,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const navContainer = document.querySelector('.nav-container');
     const footerContainer = document.querySelector('.footer-container');
     const swiperElement = document.querySelector('.mySwiper');
-
 
     // --- Global Swiper Instance Variable ---
     let swiperInstance = null;
@@ -35,7 +36,6 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     }
 
-
     // --- Function to Sync Layout ---
     function updateLayout() {
         const currentWindowWidth = window.innerWidth;
@@ -52,10 +52,10 @@ document.addEventListener('DOMContentLoaded', function() {
             footerContainer.style.maxWidth = '';
             carouselSection.style.height = '';
             if (slideContentWrappers.length > 0) {
-               slideContentWrappers.forEach(wrapper => wrapper.style.maxWidth = '');
+                slideContentWrappers.forEach(wrapper => wrapper.style.maxWidth = '');
             }
              if (swiperInstance) {
-                swiperInstance.update();
+                 swiperInstance.update();
              }
             return;
         }
@@ -88,9 +88,9 @@ document.addEventListener('DOMContentLoaded', function() {
             footerContainer.style.maxWidth = widthToApply;
 
             if (slideContentWrappers.length > 0) {
-                slideContentWrappers.forEach(wrapper => {
-                    wrapper.style.maxWidth = widthToApply;
-                });
+                 slideContentWrappers.forEach(wrapper => {
+                     wrapper.style.maxWidth = widthToApply;
+                 });
             }
              if (swiperInstance) {
                  swiperInstance.update();
@@ -105,33 +105,38 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-
      // --- Function to update the footer product title & link ---
+     // This function now gets called at the START of slideChangeTransitionEnd
      function updateProductInfo(swiper) {
-        if (!swiper || !productTitleElement || !assetStoreButton || !swiper.slides || swiper.slides.length === 0) {
+         if (!swiper || !productTitleElement || !assetStoreButton || !swiper.slides || swiper.slides.length === 0) {
              productTitleElement.textContent = 'Product Information';
              assetStoreButton.href = '#';
              assetStoreButton.classList.add('disabled');
              assetStoreButton.setAttribute('aria-disabled', 'true');
              return;
-        }
-        const activeSlideIndex = swiper.realIndex !== undefined ? swiper.realIndex : swiper.activeIndex;
-        const originalSlideElement = swiper.wrapperEl.querySelector(`.swiper-slide[data-swiper-slide-index="${activeSlideIndex}"]`);
+         }
+         const activeSlideIndex = swiper.realIndex !== undefined ? swiper.realIndex : swiper.activeIndex;
+         const originalSlideElement = swiper.wrapperEl.querySelector(`.swiper-slide[data-swiper-slide-index="${activeSlideIndex}"]`);
 
-        if (originalSlideElement && originalSlideElement.dataset) {
-            const productName = originalSlideElement.dataset.productName;
-            const assetLink = originalSlideElement.dataset.assetLink;
-            productTitleElement.textContent = productName || 'Product Title';
-            if (assetLink && assetLink !== '#' && assetLink !== '') {
-                assetStoreButton.href = assetLink;
-                assetStoreButton.classList.remove('disabled');
-                assetStoreButton.removeAttribute('aria-disabled');
-            } else {
-                assetStoreButton.href = '#';
-                assetStoreButton.classList.add('disabled');
-                assetStoreButton.setAttribute('aria-disabled', 'true');
-            }
-        } else {
+         if (originalSlideElement && originalSlideElement.dataset) {
+             const productName = originalSlideElement.dataset.productName;
+             const assetLink = originalSlideElement.dataset.assetLink;
+
+             // Update text content INSTANTLY (while element is still opacity 0)
+             productTitleElement.textContent = productName || 'Product Title';
+
+             // Update button link and state INSTANTLY (while button is still opacity 0)
+             if (assetLink && assetLink !== '#' && assetLink !== '') {
+                 assetStoreButton.href = assetLink;
+                 assetStoreButton.classList.remove('disabled');
+                 assetStoreButton.removeAttribute('aria-disabled');
+             } else {
+                 assetStoreButton.href = '#';
+                 assetStoreButton.classList.add('disabled');
+                 assetStoreButton.setAttribute('aria-disabled', 'true');
+             }
+         } else {
+             // Fallback logic
              const fallbackSlide = swiper.slides[swiper.activeIndex];
              if (fallbackSlide && fallbackSlide.dataset) {
                   productTitleElement.textContent = fallbackSlide.dataset.productName || 'Product Title';
@@ -144,9 +149,9 @@ document.addEventListener('DOMContentLoaded', function() {
                  assetStoreButton.classList.add('disabled');
                  assetStoreButton.setAttribute('aria-disabled', 'true');
              }
-            console.warn(`Could not find original slide for index ${activeSlideIndex}, used fallback.`);
-        }
-    }
+             console.warn(`Could not find original slide for index ${activeSlideIndex}, used fallback.`);
+         }
+     }
 
     // --- Swiper Initialization Function ---
     function initializeSwiper() {
@@ -157,69 +162,92 @@ document.addEventListener('DOMContentLoaded', function() {
 
         try {
             const slides = swiperElement.querySelectorAll('.swiper-slide');
-            const enableLoop = false; // slides.length >= 3;
-            const loopBuffer = 3; // Number of slides to buffer for loop
+            const enableLoop = slides.length > 3; // Loop only for 4+ slides
+
+            console.log(`Found ${slides.length} slides. Loop enabled: ${enableLoop}`);
 
             swiperInstance = new Swiper('.mySwiper', {
-                // Base (Mobile) - Loop disabled here
+                // Base settings
                 slidesPerView: 1,
                 spaceBetween: 0,
-                loop: false, // Explicitly false for mobile base
                 grabCursor: true,
                 watchOverflow: true,
                 initialSlide: 0,
-                centeredSlides: false, // False for mobile base
+                centeredSlides: false,
 
-                // --- Parameters affecting loop behavior globally when enabled ---
-                loop: enableLoop, // Enable loop globally if condition met
-                loopedSlides: enableLoop ? loopBuffer : null, // Set loopedSlides buffer only if loop enabled
+                // Global Loop Settings
+                loop: enableLoop,
+                loopedSlides: enableLoop ? Math.max(slides.length, 5) : null,
 
-                pagination: {
-                    el: '.swiper-pagination',
-                    clickable: true,
-                },
+                // Navigation
                 navigation: {
                     nextEl: '.swiper-button-next',
                     prevEl: '.swiper-button-prev',
                 },
+                // Breakpoints
                 breakpoints: {
-                    // Desktop - Configures settings *when loop is already enabled globally*
-                    [MOBILE_BREAKPOINT + 1]: {
+                    [MOBILE_BREAKPOINT + 1]: { // Desktop
                         slidesPerView: 'auto',
-                        spaceBetween: SWIPER_DESKTOP_SPACE_BETWEEN, // 1px
+                        spaceBetween: SWIPER_DESKTOP_SPACE_BETWEEN,
                         centeredSlides: true,
                     }
                 },
+                // Event Handlers
                 on: {
                     init: function(swiper) {
                         console.log('Swiper Initialized (on init event)');
-                        updateProductInfo(swiper);
-                        swiper.navigation.update();
-                        swiper.pagination.update();
-                    },
-                    slideChange: updateProductInfo,
+                        updateProductInfo(swiper); // Set initial info
 
-                    // Add handlers for transition start/end
+                        productTitleElement.classList.remove('title-fading');
+                        assetStoreButton.classList.remove('button-fading');
+
+                        swiper.navigation.update();
+
+                        setTimeout(() => {
+                            console.log('Running update and loopFix after init timeout');
+                            swiper.update();
+                            if (swiper.params.loop) {
+                                swiper.loopFix();
+                            }
+                            swiper.navigation.update();
+                        }, 0);
+                    },
+
+                    // --- REMOVED updateProductInfo call from slideChange ---
+                    // slideChange: function(swiper) {
+                    //     // updateProductInfo(swiper); // NO LONGER CALLED HERE
+                    // },
+
                     slideChangeTransitionStart: function(swiper) {
+                        // Start fade out
                         if (assetStoreButton && !assetStoreButton.classList.contains('disabled')) {
-                            assetStoreButton.classList.add('store-button-sliding');
+                            assetStoreButton.classList.add('button-fading');
+                        }
+                        if (productTitleElement) {
+                             productTitleElement.classList.add('title-fading');
                         }
                     },
                     slideChangeTransitionEnd: function(swiper) {
-                        if (assetStoreButton) {
-                            assetStoreButton.classList.remove('store-button-sliding');
-                        }
-                    },
+                        // --- MOVED updateProductInfo call here ---
+                        // Update text content and button state INSTANTLY *before* fade-in starts
+                        updateProductInfo(swiper);
 
-                    resize: updateLayout
+                        // Start fade in
+                        if (assetStoreButton) {
+                            assetStoreButton.classList.remove('button-fading');
+                        }
+                         if (productTitleElement) {
+                             productTitleElement.classList.remove('title-fading');
+                        }
+
+                        swiper.navigation.update(); // Update nav state after transition
+                    },
+                    resize: function(swiper){
+                        updateLayout();
+                    }
                 }
             });
             console.log('Swiper instance created successfully.');
-
-            if (swiperInstance) {
-                 swiperInstance.navigation.update();
-                 swiperInstance.pagination.update();
-            }
 
         } catch (e) {
             console.error("Error Initializing Swiper:", e);
@@ -227,33 +255,26 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-
     // --- Attach Global Event Listeners ---
     window.addEventListener('load', () => {
         console.log('Window Load event fired.');
         setTimeout(() => {
             console.log('Running initial updateLayout BEFORE Swiper init');
-            updateLayout(); // Calculate and apply layout first
-
+            updateLayout();
             console.log('Initializing Swiper AFTER layout...');
-            initializeSwiper(); // Initialize Swiper *after* layout is set
-
+            initializeSwiper();
             console.log('Initial Load sequence complete.');
-        }, 100); // Delay slightly for final rendering
+        }, 100);
     });
 
-    // Update layout on window resize (debounced)
     window.addEventListener('resize', debounce(updateLayout, 150));
 
-
-    // --- Non-Swiper related initializations (can run earlier) ---
+    // --- Non-Swiper related initializations ---
     document.addEventListener('DOMContentLoaded', () => {
-        // Email Obfuscation
-        const emailUser = 'arcabidi'; // Replace
-        const emailDomain = 'gmail.com'; // Replace
+        const emailUser = 'arcabidi';
+        const emailDomain = 'gmail.com';
         const emailLink = document.getElementById('email-link');
         if (emailLink) {
-            // Check if text content is already the email to prevent errors if JS runs multiple times
             if (emailLink.textContent !== `${emailUser}@${emailDomain}`) {
                  const fullEmail = `${emailUser}@${emailDomain}`;
                  emailLink.href = `mailto:${fullEmail}`;
@@ -261,21 +282,19 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         } else { console.error("Could not find element with ID 'email-link'"); }
 
-        // Dynamic Year for Footer
         const yearSpan = document.getElementById('year');
         if (yearSpan) {
             const currentDate = new Date();
-             // Check if year is already set to prevent errors if JS runs multiple times
-            if (yearSpan.textContent !== currentDate.getFullYear().toString()) {
-                yearSpan.textContent = currentDate.getFullYear();
-            }
-             // Context time: Thursday, April 3, 2025 at 1:39:47 AM EDT
-             console.log("Context time used for reference: 2025-04-03T01:39:47-04:00");
+             if (yearSpan.textContent !== currentDate.getFullYear().toString()) {
+                 yearSpan.textContent = currentDate.getFullYear();
+             }
+             console.log(`Context time: ${new Date().toISOString()}`);
+             console.log(`Location: Virginia Beach, Virginia, United States`);
         } else { console.error("Could not find element with ID 'year'"); }
 
         console.log('DOM Content Loaded - Non-Swiper initializations complete.');
-    }); // End DOMContentLoaded for non-swiper things
+    });
 
      console.log('End of script execution (initial run before load/DOMContentLoaded)');
 
-}); // End Main Scope Function
+});
