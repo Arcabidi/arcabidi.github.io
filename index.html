@@ -6,16 +6,17 @@
     <title>Arcabidi Portfolio</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/img-comparison-slider@latest/dist/styles.css"/>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <nav class="navbar">
         <div class="nav-container">
             <a href="#" class="nav-logo">
-                <img src="Arcabidi Faded.png" alt="Arcabidi Logo" class="logo-icon">
+                <img src="arcabidi.png" alt="Arcabidi Logo" class="logo-icon">
                 Arcabidi
             </a>
             <ul class="nav-menu">
@@ -24,7 +25,7 @@
                         <i class="fa-brands fa-github"></i>
                     </a>
                 </li>
-                </ul>
+             </ul>
         </div>
     </nav>
 
@@ -33,13 +34,41 @@
             <div class="swiper-wrapper">
                 <div class="swiper-slide"
                      data-product-name="2.5D Beat 'Em Up Template"
-                     data-asset-link="YOUR_ASSET_STORE_LINK_ALPHA"> <div class="slide-content-wrapper">
-                        <img src="2p5dbeatemuptemplate.png" alt="2.5D Beat 'Em Up Template Screenshot"> </div>
+                     data-asset-link="YOUR_ASSET_STORE_LINK_1">
+                    <div class="slide-content-wrapper">
+                        <img-comparison-slider class="rendered swiper-no-swiping">
+                            <img slot="first" src="prototype.png" alt="Before View" />
+                            <img slot="second" src="product.png" alt="After View" />
+                        </img-comparison-slider>
+                    </div>
                 </div>
-            </div>
+
+                <div class="swiper-slide"
+                     data-product-name="Dragon Crashers"
+                     data-asset-link="YOUR_ASSET_STORE_LINK_2">
+                    <div class="slide-content-wrapper">
+                        <img src="dragon_crashers.png" alt="Regular Image One" />
+                    </div>
+                </div>
+
+                <div class="swiper-slide"
+                     data-product-name="QuizU"
+                     data-asset-link="YOUR_ASSET_STORE_LINK_3">
+                    <div class="slide-content-wrapper">
+                         <img src="quizu.jpeg" alt="Regular Image Two" />
+                    </div>
+                </div>
+
+                <div class="swiper-slide"
+                     data-product-name="Chop Chop"
+                     data-asset-link="YOUR_ASSET_STORE_LINK_3">
+                    <div class="slide-content-wrapper">
+                         <img src="chopchop.png" alt="Regular Image Two" />
+                    </div>
+                </div>
+                </div>
             <div class="swiper-button-next"></div>
             <div class="swiper-button-prev"></div>
-            <div class="swiper-pagination"></div>
         </div>
     </section>
 
@@ -48,9 +77,7 @@
              <div class="footer-left">
                  <h2 id="product-title">Product Title</h2>
              </div>
-
-             <a id="asset-store-button" href="#" class="button store-button footer-asset-button" target="_blank">View in Unity Asset Store</a>
-
+             <a id="asset-store-button" href="#" class="button store-button footer-asset-button" target="_blank">View in Asset Store</a>
              <div class="footer-right">
                  <p>
                      <a id="email-link" href="#">arcabidi@gmail.com</a>
@@ -59,7 +86,9 @@
              </div>
         </div>
     </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/img-comparison-slider@latest/dist/index.js" defer></script>
     <script src="script.js"></script>
 </body>
 </html>
