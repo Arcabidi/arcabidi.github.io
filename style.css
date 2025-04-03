@@ -10,430 +10,558 @@
 html {
     scroll-behavior: smooth;
     height: 100%;
+    font-size: 16px;
 }
 
 body {
     font-family: 'Inter', sans-serif;
-    background-color: #f8f9fa; /* Light grey page background */
-    color: #343a40;
+    background-color: #0a0a0a;
+    color: #e0e0e0;
     line-height: 1.6;
     font-weight: 400;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    height: 100%;
+    overflow: hidden; /* Prevent body scrollbars (on desktop) */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* --- Navbar --- */
 .navbar {
-    background-color: #000000;
-    padding: 1rem 0;
+    background-color: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 0.75rem 0;
     position: sticky;
     top: 0;
     z-index: 1000;
     width: 100%;
     flex-shrink: 0;
+    /* border-bottom: 1px solid rgba(255, 255, 255, 0.1); */
 }
 
 .nav-container {
-    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: max-width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+    /* max-width controlled by JS */
 }
 
-.nav-logo { font-size: 1.5rem; font-weight: 700; color: #ffffff; text-decoration: none;
-    display: flex; /* Make the link a flex container */
-    align-items: center; /* Vertically align items inside (icon + text) */
-    gap: 0.2rem; /* Space between logo icon and text */}
+.nav-logo {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-decoration: none;
+    display: flex;         /* Aligns icon and text */
+    align-items: center;  /* Vertically centers icon and text */
+    gap: 0.6rem;          /* Space between icon and text */
+}
 
 .logo-icon {
-    height: 40px; /* Adjust height as needed */
-    width: auto; /* Maintain aspect ratio */
-    display: block; /* Remove extra space below image */
+    height: 40px; /* Adjust size as needed */
+    width: auto;  /* Maintain aspect ratio */
+    display: block; /* Good practice for images in flex */
 }
-.nav-menu { list-style: none; display: flex; gap: 25px; align-items: center; }
-.nav-link { color: #e0e0e0; text-decoration: none; font-weight: 500; transition: color 0.3s ease; display: inline-flex; align-items: center;}
-.nav-link:hover { color: #ffffff; }
 
-/* --- GitHub Icon Specific Styling --- */
+.nav-menu {
+    list-style: none;
+    display: flex;
+    gap: 35px;
+    align-items: center;
+}
+
+.nav-link {
+    color: #d0d0d0;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    font-size: 1rem;
+}
+
+.nav-link:hover {
+    color: #ffffff;
+}
+
 .nav-link .fa-github {
-    font-size: 1.6rem;
+    font-size: 1.9rem;
     line-height: 1;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-link:hover .fa-github {
+    color: #f34c4c;
+    transform: scale(1.1);
 }
 
 /* --- Portfolio Carousel Section --- */
 .portfolio-carousel {
-    display: flex;
     width: 100%;
+    flex-grow: 1; /* Fill vertical space */
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
-    background-color: #000000; /* Set background to black */
-    flex-grow: 1;
+    background-color: #0a0a0a;
+    position: relative;
+    /* height set by JS */
 }
 
 /* --- Swiper Styles --- */
 .swiper {
     width: 100%;
     height: 100%;
+    position: static; /* Let portfolio-carousel be the positioning context */
 }
 
 .swiper-wrapper {
-    align-items: center; /* Align slides vertically */
+    align-items: center;
+    height: 100%;
+    display: flex;
 }
 
 .swiper-slide {
-    position: relative; /* Keep for potential future overlays if needed */
-    background-color: #000000; /* Slide background matches section */
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%; /* Ensure slide takes full height */
-    overflow: hidden;
-    width: 100%; /* Default mobile */
-    max-width: none; /* Override any max-width */
-    opacity: 1; /* Default opacity for mobile */
-    transform: none; /* Default transform for mobile */
-    transition: transform 0.4s ease, opacity 0.4s ease, filter 0.4s ease;
+    overflow: visible;
+    flex-shrink: 0;
+    width: auto; /* For slidesPerView: 'auto' */
+    position: relative;
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s ease;
+}
+
+/* Non-active slide styling (Desktop) */
+@media (min-width: 769px)
+{
+    .swiper-slide:not(.swiper-slide-active)
+    {
+        opacity: 0.25;
+    }
+    .swiper-no-transition .swiper-slide:not(.swiper-slide-active)
+    {
+        transition: none;
+        opacity: 0.5; /* Or match 0.25 if preferred */
+    }
+}
+
+
+/* Inner content wrapper */
+.slide-content-wrapper {
+    width: 100%;
+    height: 100%; /* Takes full slide height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    overflow: hidden; /* Clip image content IF NEEDED (contain shouldn't need it) */
+    position: relative;
+    border-radius: 8px; /* Optional: rounded corners */
+    transition: max-width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    /* max-width set by JS */
 }
 
 .swiper-slide img {
     display: block;
-    aspect-ratio: 3 / 2; /* Maintain aspect ratio */
-    object-fit: contain; /* Scale image down to fit, keeping aspect ratio */
-    width: auto; /* Let height determine width */
-    max-width: 100%; /* Prevent image from exceeding slide width */
-    height: auto; /* Let width determine height */
-    max-height: 100%; /* Prevent image from exceeding slide height */
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Scale down to fit, maintain aspect ratio, NO CROP */
+    max-width: 100%;     /* Safety */
+    max-height: 100%;    /* Safety for contain */
+    user-select: none;
+    -webkit-user-drag: none;
+    border-radius: 8px; /* Match wrapper radius */
 }
 
-/* --- Base Button Styles (shared by overlay and footer) --- */
+/* --- Base Button Styles --- */
 .button {
     display: inline-block;
     text-decoration: none;
-    border-radius: 5px;
+    border-radius: 6px;
     font-weight: 500;
     text-align: center;
     cursor: pointer;
-    /* ADDED transform back to transition */
-    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-    color: #ffffff !important; /* Ensure text is white */
-    padding: 14px 30px; /* Larger padding for prominence */
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-}
-
-/* Specific styles for Store Button look */
-.button.store-button {
-    background-color: rgba(243, 76, 76, 0.8); /* Reddish background */
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px); /* For Safari */
-}
-
-/* --- ADDED HOVER RULE BACK --- */
-.button.store-button:hover {
-    background-color: rgba(243, 76, 76, 1.0); /* Fully opaque */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.5); /* More prominent shadow */
-    /* Apply scale while respecting existing vertical transform if needed elsewhere */
-    /* Since footer button handles vertical centering itself, we can just use scale here */
-    /* If button used elsewhere needed Y translate, use: transform: translateY(-50%) scale(1.05); */
-     /* transform: scale(1.05); Let's re-evaluate this with the footer button's transform */
-}
-
-/* Style for DISABLED store button (if needed later) */
-.button.store-button.disabled {
-    background-color: rgba(100, 100, 100, 0.6);
-    border-color: rgba(255, 255, 255, 0.2);
-    cursor: not-allowed;
-    pointer-events: none; /* Prevents clicks */
+    /* --- MODIFIED: Removed 'transform' from transition --- */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
+    color: #ffffff !important;
+    padding: 12px 28px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
     text-shadow: none;
-    transform: none; /* No hover effect */
+    font-size: 0.95rem;
+}
+
+.button.store-button {
+    background-color: #f34c4c;
+    border-color: #f34c4c;
+}
+
+/* Hover effect - NO MOVEMENT */
+.button.store-button:not(.disabled):hover {
+    background-color: #f56969; /* Slightly lighter red */
+    border-color: #f56969;
+    box-shadow: 0 4px 12px rgba(243, 76, 76, 0.4); /* Add a subtle glow */
+    /* transform: translateY(-2px); <-- REMOVED */
+}
+
+/* Style for when the carousel is sliding - DARK GRAY */
+.button.store-button.store-button-sliding {
+    background-color: #555; /* Dark Gray */
+    border-color: #555;    /* Dark Gray */
+    pointer-events: none; /* Prevent clicking during transition */
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2); /* Match base shadow, remove hover glow */
+    /* transform: none; <-- REMOVED */
+    /* transition: ... <-- REMOVED specific transition */
+}
+
+/* --- CORRECTED ACTIVE STATE (FIXED) --- */
+.button.store-button:active {
+    /* Removed transform: translateY(0px); to prevent movement */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2); /* Keep shadow change */
+    background-color: #e03a3a; /* Keep darker color */
+    border-color: #e03a3a;     /* Keep darker border */
+}
+
+.button.store-button.disabled {
+    background-color: #555;
+    border-color: #555;
+    cursor: not-allowed;
+    pointer-events: none;
+    transform: none; /* Explicitly no transform when disabled */
     box-shadow: none;
+    opacity: 0.6;
 }
 
-/* --- Footer Asset Button Specific Positioning --- */
+/* --- Footer Asset Button Specific Positioning (Desktop) --- */
 .footer-asset-button {
-    position: absolute; /* Position relative to footer-container */
-    top: 50%; /* Start at vertical center */
-    /* Base transform for vertical centering */
-    transform: translateY(-50%);
-    /* 'left' will be set by JavaScript */
-    left: 53.28125%; /* Default fallback position before JS runs */
-    z-index: 5; /* Ensure it's above other static footer content if overlap occurs */
-    padding: 10px 20px; /* Footer specific padding */
-    /* Add transform back to transition specifically for this button if base doesn't have it */
-    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease, left 0.3s ease-out;
+    position: absolute;
+    top: 50%;
+    left: calc(50%); /* Position relative to footer center */
+    transform: translate(-50%, -50%); /* Center the button itself */
+    z-index: 5;
+    padding: 10px 20px;
+    font-size: 0.9rem;
 }
 
-/* --- UPDATED FOOTER BUTTON HOVER --- */
-/* Target footer button specifically to combine transforms */
-.footer-asset-button:hover {
-     /* Keep hover styles from .button.store-button:hover */
-     background-color: rgba(243, 76, 76, 1.0);
-     box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-     /* Combine vertical centering with scale */
-     transform: translateY(-50%) scale(1.05);
+.footer-asset-button.disabled:hover { /* Reset transform on disabled hover */
+    transform: translate(-50%, -50%);
 }
-/* Ensure disabled footer button doesn't scale */
-.footer-asset-button.disabled:hover {
-    transform: translateY(-50%); /* Just the centering */
-}
-
 
 /* --- Swiper Navigation/Pagination Styles --- */
 :root {
     --swiper-navigation-color: #ffffff;
     --swiper-pagination-color: #ffffff;
-    --swiper-navigation-size: 30px; /* Control arrow size */
+    --swiper-navigation-size: 38px;
+    --swiper-theme-color: #f34c4c;
 }
 
 .swiper-button-next,
 .swiper-button-prev {
-    display: none; /* Hide by default (mobile-first) */
     color: var(--swiper-navigation-color) !important;
-    background-color: rgba(0, 0, 0, 0.3);
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-    padding: 15px 5px; /* Add padding around the arrow icon */
-    border-radius: 50%; /* Make it circular */
-    width: calc(var(--swiper-navigation-size) + 10px); /* Adjust width based on size + padding */
-    height: calc(var(--swiper-navigation-size) + 10px); /* Adjust height based on size + padding */
-    transform: scale(0.9); /* Slightly smaller appearance */
-    transition: background-color 0.3s ease;
+    background-color: rgba(10, 10, 10, 0.5);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    padding: 22px;
+    border-radius: 50%;
+    width: var(--swiper-navigation-size);
+    height: var(--swiper-navigation-size);
+    transition: background-color 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
+.swiper-button-next::after,
+.swiper-button-prev::after {
+    font-size: calc(var(--swiper-navigation-size) * 0.4) !important;
+    font-weight: 900;
+}
+
 .swiper-button-next:hover,
 .swiper-button-prev:hover {
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.7);
+    transform: translateY(-50%) scale(1.1);
 }
-.swiper-button-prev { left: 30px; } /* Position from edge */
-.swiper-button-next { right: 30px; } /* Position from edge */
 
-.swiper-pagination-bullet {
-    background-color: rgba(255, 255, 255, 0.5); /* Dim inactive bullets */
-    opacity: 1;
-}
-.swiper-pagination-bullet-active {
-    background-color: var(--swiper-pagination-color); /* Bright active bullet */
-}
+.swiper-button-prev { left: 30px; }
+.swiper-button-next { right: 30px; }
+
+/* === START FINAL PAGINATION STYLES v2 === */
+
+/* Pagination Container - FINAL VERSION */
 .swiper-pagination {
-    bottom: 15px !important; /* Position pagination */
+    position: absolute; /* Keep absolute positioning */
+    bottom: 20px;       /* Position from bottom */
+
+    /* --- Force horizontal centering properties to override potential inline styles --- */
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    /* --- End Forced Properties --- */
+
+    width: auto;        /* Allow width to adjust to content (bullets) */
+    z-index: 10;        /* Ensure above slides */
+
+    /* Style helpers for bullet layout */
+    line-height: 1;
+    text-align: center; /* Center the inline-block bullets */
+    white-space: nowrap;/* Prevent wrapping */
+
+    /* Resets */
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
-
-/* --- Styles to Hide Nav/Pagination if Swiper disables them --- */
-.swiper-button-disabled {
-    display: none !important; /* Crucial for hiding arrows when watchOverflow disables them */
+/* Individual Pagination Bullets */
+.swiper-pagination-bullet {
+    background-color: rgba(255, 255, 255, 0.4); /* Slightly more visible */
+    opacity: 1;
+    width: 9px;  /* Adjust size */
+    height: 9px; /* Adjust size */
+    margin: 0 4px; /* Spacing between bullets */
+    border-radius: 50%; /* Perfectly round */
+    display: inline-block; /* Needed for text-align:center to work */
+    cursor: pointer;
+    transition: background-color 0.3s ease, width 0.3s ease, border-radius 0.3s ease;
+    vertical-align: middle; /* Align nicely on the line */
 }
+
+/* Active Pagination Bullet */
+.swiper-pagination-bullet-active {
+    background-color: var(--swiper-theme-color); /* Use theme color */
+    width: 25px; /* Make active bullet wider */
+    border-radius: 5px; /* Rounded rectangle shape */
+}
+
+/* Hide pagination when Swiper disables it */
 .swiper-pagination-hidden {
-    display: none !important; /* Hide pagination if disabled */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
 }
+/* === END FINAL PAGINATION STYLES === */
 
+
+.swiper-button-disabled {
+    opacity: 0 !important; /* Use opacity for fade effect */
+    pointer-events: none !important;
+    cursor: default !important;
+}
 
 /* --- Footer --- */
 footer {
-    background-color: #000000;
-    color: #f8f9fa;
-    padding: 1.5rem 0;
-    flex-shrink: 0; /* Prevent footer from shrinking */
-    z-index: 1; /* Keep above potential absolute elements */
-    position: relative; /* Needed for absolute positioning of the button */
+    background-color: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #e0e0e0;
+    padding: 0.9rem 0;
+    flex-shrink: 0;
+    z-index: 10;
+    position: relative;
+    /* border-top: 1px solid rgba(255, 255, 255, 0.1); */
 }
 
 .footer-container {
-    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 40px;
     display: flex;
     justify-content: space-between;
-    align-items: center; /* Helps vertically center flex items */
-    flex-wrap: wrap; /* Allow wrapping on smaller screens */
-    gap: 15px; /* Space between left/right sections when wrapped */
-    position: relative; /* Anchor for the absolute positioned button */
-    min-height: 60px; /* Ensure footer has some height for centering, adjust as needed */
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    position: relative;
+    min-height: 55px;
+    transition: max-width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    /* max-width controlled by JS */
 }
 
 .footer-left {
     text-align: left;
-    flex-basis: auto; /* Allow content to size */
-    flex-grow: 1; /* Allow left side to grow */
-    margin-right: auto; /* Push right content away */
-    z-index: 2; /* Keep above button if overlapping */
-    position: relative; /* Ensure stacking context */
+    flex-basis: auto;
+    flex-grow: 1;
+    margin-right: auto;
+    z-index: 2;
+    position: relative;
 }
 
 .footer-right {
     text-align: right;
-    flex-basis: auto; /* Allow content to size */
-    margin-left: 20px; /* Add some space from the button area */
-    z-index: 2; /* Keep above button if overlapping */
-    position: relative; /* Ensure stacking context */
+    flex-basis: auto;
+    margin-left: 20px;
+    z-index: 2;
+    position: relative;
 }
 
-
 .footer-left h2 {
-    font-size: 1.75rem; /* Existing style */
+    font-size: 1.5rem;
     color: #ffffff;
-    margin-bottom: 0px; /* Reduced margin */
-    font-weight: 700;
+    margin-bottom: 0px;
+    font-weight: 600;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 200px); /* Adjust based on button/right size */
 }
 
 #email-link {
-    color: #ffffff;
-    text-decoration: underline;
+    color: #b0b0b0;
+    text-decoration: none;
     font-weight: normal;
     font-size: 0.9rem;
-    word-break: break-all; /* Prevent long emails overflowing */
+    word-break: break-all;
     transition: color 0.3s ease;
 }
+
 #email-link:hover {
-    color: #ced4da;
-    text-decoration: underline;
+    color: var(--swiper-theme-color);
 }
 
 .footer-right p {
     font-size: 0.85em;
-    color: #adb5bd;
-    margin-bottom: 2px; /* Reduced margin */
+    color: #a0a0a0;
+    margin-bottom: 2px;
+    line-height: 1.4;
 }
-
 
 /* --- Responsive Adjustments --- */
 
-/* Desktop - Strict Height & Centered Preview Mode */
+/* Desktop (min-width: 769px) */
 @media (min-width: 769px) {
-    body {
-        height: 100vh; /* Fix body height */
-        overflow: hidden; /* Prevent body scroll */
-    }
-    .portfolio-carousel {
-        /* !!! IMPORTANT: ADJUST THESE PIXEL VALUES based on your actual Navbar/Footer height !!! */
-        height: calc(100vh - 64px - 95px - 1px); /* Example: 64px Navbar, 95px Footer */
-    }
-    /* Show arrows ONLY IF they are NOT disabled by Swiper */
-    .swiper-button-next:not(.swiper-button-disabled),
-    .swiper-button-prev:not(.swiper-button-disabled) {
-        display: flex; /* Use flex to center icon inside */
-        align-items: center;
-        justify-content: center;
-    }
-
-    /* --- STYLES for non-active slides --- */
-    .swiper-slide {
-        opacity: 0.7;
-        transform: scale(0.85);
-        filter: brightness(0.45); /* Slightly darker */
-        width: auto;
-        max-width: none;
-        background-color: #000000;
-    }
-
-    /* --- STYLES for the active slide --- */
-    .swiper-slide-active {
-        opacity: 1;
-        transform: scale(1);
-        filter: brightness(1);
-    }
+    /* Styles specific to desktop if needed beyond global */
 }
 
-
-/* Mobile - Revert & Allow Scroll */
+/* Mobile (max-width: 768px) */
 @media (max-width: 768px) {
-    body {
-        height: auto; /* Allow body height to grow */
-        overflow: auto; /* Allow body scroll */
-        min-height: 100vh; /* Ensure footer reaches bottom */
+    html {
+        font-size: 15px;
     }
+    body {
+        height: auto;
+        min-height: 100vh;
+        overflow: auto;
+    }
+
+    .navbar, footer {
+        background-color: #0a0a0a;
+        backdrop-filter: none;
+        padding: 0.8rem 0;
+    }
+    .nav-container, .footer-container {
+        max-width: none !important;
+        padding: 0 15px;
+    }
+
+    .nav-menu { display: none; }
+
     .portfolio-carousel {
-        height: auto; /* Let carousel content dictate height */
-        min-height: 60vh; /* Give it a minimum height */
-        flex-grow: 0; /* Don't force it to fill space */
-        background-color: #000000;/* Black bg on mobile too */
+        height: auto;
+        min-height: 40vh;
+        padding: 0;
+        flex-grow: 0;
+        align-items: stretch;
+    }
+
+    .swiper, .swiper-wrapper, .swiper-slide {
+        height: auto;
     }
     .swiper-wrapper {
-        align-items: stretch; /* Allow different height slides if needed */
+        align-items: stretch;
     }
-    /* Reset desktop effects for mobile */
-    .swiper-slide {
-        width: 100% !important; /* Force full width */
-        opacity: 1 !important; /* Ensure full opacity */
-        transform: none !important; /* Reset transform */
-        filter: none !important; /* Reset filter */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #000000; /* Black bg */
+    /* Reset desktop non-active styles */
+    .swiper-slide:not(.swiper-slide-active) {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
     }
-    .swiper-slide img {
-        max-height: 80%; /* Limit image height within slide */
-        max-width: 95%; /* Limit image width within slide */
+
+    .slide-content-wrapper {
+        height: auto;
+        max-width: none !important;
         border-radius: 0;
         box-shadow: none;
     }
-    .nav-menu { display: none; } /* Hide desktop nav menu items */
 
-    /* Explicitly hide arrows on mobile, overriding desktop styles */
+    .swiper-slide img {
+        height: auto;
+        width: 100%;
+        max-height: 70vh;
+        /* Keep contain on mobile as well if no cropping desired */
+        object-fit: contain;
+        border-radius: 0;
+    }
+
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 12px;
+        position: static;
+        min-height: auto;
+    }
+    .footer-left, .footer-right {
+        text-align: center;
+        flex-basis: auto;
+        width: 100%;
+        margin: 0;
+        z-index: auto;
+        position: static;
+    }
+    .footer-left h2 {
+        font-size: 1.3rem;
+        max-width: 90%;
+        margin: 0 auto;
+        white-space: normal;
+    }
+
+    .footer-asset-button {
+        position: static;
+        transform: none;
+        margin-top: 8px;
+        margin-bottom: 8px;
+        padding: 12px 25px;
+        order: 1;
+        width: auto;
+        max-width: 70%;
+        left: auto !important; /* Ensure override */
+    }
+
+    .footer-left { order: 0; }
+    .footer-right { order: 2; }
+
     .swiper-button-next,
     .swiper-button-prev {
         display: none !important;
     }
 
-    .footer-container {
-        flex-direction: column; /* Stack elements vertically */
-        align-items: center; /* Center-align items */
+    .swiper-pagination {
+        bottom: 10px; /* Removed !important */
+        position: absolute;
+        width: auto;
+        background-color: transparent;
+        border: none;
+        padding: 0;
         text-align: center;
-        gap: 15px; /* Adjust gap for vertical stacking */
-        position: static; /* Override relative positioning */
-        min-height: auto; /* Reset min-height */
+        left: 50%;
+        transform: translateX(-50%);
     }
-    .footer-left, .footer-right {
-        text-align: center;
-        flex-basis: auto; /* Reset basis */
-        width: 100%; /* Take full width */
-        margin: 0; /* Reset margins */
-        z-index: auto; /* Reset z-index */
-        position: static; /* Reset position */
-    }
-     .footer-left h2 {
-        font-size: 1.5rem; /* Adjust h2 size for mobile if needed */
-    }
-
-    /* --- Footer Button on Mobile --- */
-    .footer-asset-button {
-        position: static; /* Make it part of the normal flow */
-        transform: none; /* Reset transforms */
-        margin-top: 10px; /* Add some space above it */
-        margin-bottom: 10px; /* Add some space below it */
-        padding: 12px 25px; /* Adjust padding */
-        order: 1; /* Place it after footer-left but before footer-right in column */
-        width: auto; /* Allow button to size naturally */
-        max-width: 80%; /* Prevent it getting too wide */
-        left: auto !important; /* Ensure JS 'left' style is overridden */
-        /* No specific hover transform needed here */
-    }
-    /* Mobile hover effect - simpler */
-    .footer-asset-button:hover {
-        background-color: rgba(243, 76, 76, 1.0);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-        /* No scale needed on mobile hover */
-        transform: none;
-    }
-     /* Ensure right content comes after button on mobile */
-     .footer-right {
-        order: 2;
-     }
-
-    .footer { padding: 1rem 15px; }
-}
-
-/* Fallback scroll allowance for very tall/narrow screens or short screens */
-@media (max-aspect-ratio: 9/16), (max-height: 550px) {
-     body {
-        height: auto;
-        overflow: auto;
-        min-height: 100vh;
-     }
-     .portfolio-carousel {
-        height: auto;
-        min-height: 50vh;
+    /* Remove !important from mobile pagination */
+     @media (max-width: 768px) {
+         .swiper-pagination {
+             /* Override desktop !important ONLY IF NEEDED on mobile, test without first */
+             /* left: 50% !important; */
+             /* transform: translateX(-50%) !important; */
+         }
      }
 }
